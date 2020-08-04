@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model common\models\User */
 
 $this->title = '更新成员信息: ' . $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '用户管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '用户更新';
 ?>
 <div class="user-update">
 

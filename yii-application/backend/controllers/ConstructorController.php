@@ -109,7 +109,7 @@ class ConstructorController extends Controller
             $agreement->agreementFile = UploadedFile::getInstance($agreement, 'agreementFile');
             if ($agreement->agreementFile != null) {
                 $model->agreement = $model->name . '.' . $agreement->agreementFile->extension;
-                $agreement->upload($model->agreement);
+                $agreement->upload($model->agreement , 'constructor');
             }
 
             if ($licence->licenceFile != null) {
@@ -146,7 +146,7 @@ class ConstructorController extends Controller
             $licence->licenceFile = UploadedFile::getInstance($licence, 'licenceFile');
             if ($agreement->agreementFile != null) {
                 $model->agreement = $model->name . '.' . $agreement->agreementFile->extension;
-                $agreement->upload($model->agreement);
+                $agreement->upload($model->agreement , 'constructor');
             }
 
             if ($licence->licenceFile != null) {

@@ -2,13 +2,16 @@
 
 namespace backend\controllers;
 
+use common\models\AgreementModel;
 use Yii;
 use common\models\StudentConstructor;
 use common\models\StudentConstructorSearch;
 use yii\base\Model;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * StudentConstructorController implements the CRUD actions for StudentConstructor model.
@@ -23,6 +26,16 @@ class StudentConstructorController extends Controller
     public function behaviors()
     {
         return [
+            'access' =>[
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'update','delete','view','create' , 'agreement'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -68,18 +81,23 @@ class StudentConstructorController extends Controller
     public function actionCreate()
     {
         $model = new StudentConstructor();
-
-        if ($model->load(Yii::$app->request->post()  )) {
-            $model->join_date = time();
+        $agreement = new AgreementModel();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->join_date = strtotime($model->join_date);
+            $model->end_date = strtotime($model->end_date);
+            $agreement->agreementFile = UploadedFile::getInstance($agreement , 'agreementFile');
+            if($agreement->agreementFile!=null){
+                $model->agreement = $model->student_id.'_'.$model->constructor_id.'.'.$agreement->agreementFile->extension;
+                $agreement->upload($model->agreement , 'student');
+                $model->save();
+            }
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
-
             }
         }
-
-
         return $this->render('create', [
             'model' => $model,
+            'agreement' => $agreement
         ]);
     }
 
@@ -93,13 +111,23 @@ class StudentConstructorController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $agreement = new AgreementModel();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->join_date = strtotime($model->join_date);
+            $model->end_date = strtotime($model->end_date);
+            $agreement->agreementFile = UploadedFile::getInstance($agreement , 'agreementFile');
+            if($agreement->agreementFile!=null){
+                $model->agreement = $model->student_id.'_'.$model->constructor_id.'.'.$agreement->agreementFile->extension;
+                $agreement->upload($model->agreement , 'student');
+                $model->save();
+            }
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
-        return $this->render('update', [
+        return $this->render('create', [
             'model' => $model,
+            'agreement' => $agreement
         ]);
     }
 
@@ -113,7 +141,6 @@ class StudentConstructorController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
@@ -129,7 +156,15 @@ class StudentConstructorController extends Controller
         if (($model = StudentConstructor::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAgreement($id)
+    {
+        $model = $this->findModel($id);
+        $filePath = 'uploads/agreement/student/' . $model->agreement;
+        if ($model->isAgreementExist()) {
+            Yii::$app->response->sendFile($filePath);
+        }
     }
 }

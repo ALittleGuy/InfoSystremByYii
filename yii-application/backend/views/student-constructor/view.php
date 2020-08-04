@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StudentConstructor */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Student Constructors', 'url' => ['index']];
+$this->title = \common\models\Student::findOne(['id' => $model->id]);
+$this->params['breadcrumbs'][] = ['label' => '兼职管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -55,6 +56,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             ['attribute' => 'end_date',
                 'format' => ['date', 'php:Y-m-d H:i:s'],
+            ],
+
+            [
+                'label' => 'agreement',
+                'format' => 'raw',
+                'value' => Html::img('uploads/agreement/student/' . $model->agreement, ['alt' => 'agreement','width'=> '200' , 'height' => '100'])
+            ],
+            [
+                'label' => 'agreement download',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model->agreement != null && $model->isAgreementExist()) {
+                        return Html::a($model->agreement, Url::to(['student-constructor/agreement', 'id' => $model->id], true));
+                    } else {
+                        return '营业执照缺失';
+                    }
+                }
             ],
         ],
     ]) ?>

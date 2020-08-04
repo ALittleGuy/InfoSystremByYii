@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\StudentConstructorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Student Constructors';
+$this->title = '兼职管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-constructor-index">

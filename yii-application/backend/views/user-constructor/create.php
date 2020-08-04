@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\UserConstructor */
 
 $this->title = '新建跟进项';
-$this->params['breadcrumbs'][] = ['label' => 'User Constructors', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '机构跟进管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-constructor-create">

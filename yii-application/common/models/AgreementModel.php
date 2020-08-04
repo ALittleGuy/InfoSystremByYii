@@ -18,9 +18,9 @@ class AgreementModel extends Model
         ];
     }
 
-    public function upload($fileName){
+    public function upload($fileName , $identity){
         if ($this->validate()) {
-            $this->agreementFile->saveAs('uploads/agreement/constructor/' . $fileName );
+            $this->agreementFile->saveAs('uploads/agreement/'.$identity.'/' . $fileName );
             return true;
         } else {
             return false;

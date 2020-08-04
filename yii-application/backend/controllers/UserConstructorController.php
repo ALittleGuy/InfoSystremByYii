@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\UserConstructor;
 use common\models\UserConstructorSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +21,16 @@ class UserConstructorController extends Controller
     public function behaviors()
     {
         return [
+            'access' =>[
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'update','delete','view','create','finish'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

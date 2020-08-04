@@ -32,6 +32,21 @@ class StudentConstructor extends \yii\db\ActiveRecord
         return 'student_constructor';
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'join_date' => '开始日期',
+            'end_date' => '结束日期',
+            'constructor_id' => '机构',
+            'student_id' => '学生',
+            'profile' => '备注',
+            'salary' => '工资（元/时）',
+            'agreement' =>'协议书',
+            'status_id' => '状态',
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -39,32 +54,17 @@ class StudentConstructor extends \yii\db\ActiveRecord
     {
         return [
             [['join_date', 'constructor_id', 'student_id', 'salary'], 'required'],
-            [['join_date', 'end_date', 'constructor_id', 'status_id'], 'integer'],
-            [['salary'], 'number' , 'message' => 'required a number'],
-            [['profile'], 'string' , 'message' => 'required a string'],
-            [['agreement'], 'string', 'max' => 128 ],
+            [['constructor_id', 'status_id'], 'integer'],
+            [['salary'], 'number', 'message' => 'required a number'],
+            [['profile'], 'string', 'message' => 'required a string'],
+            [['agreement'], 'string', 'max' => 128],
             [['constructor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Constructor::className(), 'targetAttribute' => ['constructor_id' => 'id']],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => Student::className(), 'targetAttribute' => ['student_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => WorkStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'join_date' => 'Join Date',
-            'end_date' => 'End Date',
-            'constructor_id' => 'Constructor ID',
-            'student_id' => 'Student ID',
-            'salary' => 'Salary',
-            'profile' => 'Profile',
-            'agreement' => 'Agreement',
-            'status_id' => 'Status ID',
-        ];
-    }
+
 
     /**
      * Gets query for [[Constructor]].
@@ -94,5 +94,15 @@ class StudentConstructor extends \yii\db\ActiveRecord
     public function getStatus()
     {
         return $this->hasOne(WorkStatus::className(), ['id' => 'status_id']);
+    }
+
+    public function isAgreementExist()
+    {
+        $filepath = 'uploads/agreement/student/' . $this->agreement;
+        if (file_exists($filepath)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

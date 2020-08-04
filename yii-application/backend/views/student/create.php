@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Student */
 
 $this->title = '导入学生';
-$this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '学生管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-create">

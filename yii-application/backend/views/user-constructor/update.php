@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model common\models\UserConstructor */
 
 $this->title = '更新更进项信息: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'User Constructors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = ['label' => 'User 机构跟进管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id , 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = '机构信息更新';
 ?>
 <div class="user-constructor-update">
 

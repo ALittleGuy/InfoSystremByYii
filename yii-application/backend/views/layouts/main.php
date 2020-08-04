@@ -37,12 +37,13 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => '首页', 'url' => ['/site/index']],
         ['label' => '用户管理' , 'url' => ['/user/index']],
         ['label' => '学生管理' , 'url' => ['/student/index']],
         ['label' => '机构管理' , 'url' => ['/constructor/index']],
         ['label' => '机构跟进表' , 'url' => ['/user-constructor/index']],
-        ['label' => '学生兼职表' , 'url' => ['/student-constructor/index']]
+        ['label' => '学生兼职表' , 'url' => ['/student-constructor/index']],
+        ['label' => '公告文件管理' , 'url' => ['/publicfile/index']]
 
     ];
     if (Yii::$app->user->isGuest) {
@@ -51,7 +52,7 @@ AppAsset::register($this);
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                '登出 (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

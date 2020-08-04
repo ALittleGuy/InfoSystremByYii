@@ -4,11 +4,10 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StudentConstructor */
-
-$this->title = 'Update Student Constructor: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Student Constructors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+/* @var $agreement common\models\AgreementModel */
+$this->title = '兼职信息更新' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => '兼职管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-constructor-update">
 
@@ -16,6 +15,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'agreement' => $agreement
     ]) ?>
 
 </div>

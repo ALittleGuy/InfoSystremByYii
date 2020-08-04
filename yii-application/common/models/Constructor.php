@@ -137,13 +137,13 @@ class Constructor extends \yii\db\ActiveRecord
         }
     }
 
-    public function upload()
-    {
-        if ($this->validate()) {
-            $this->licenceFile->saveAs('uploads/licence/' . $this->name . '.' . $this->licenceFile->extension);
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public function upload()
+//    {
+//        if ($this->validate()) {
+//            $this->licenceFile->saveAs('uploads/licence/' . $this->name . '.' . $this->licenceFile->extension);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 }

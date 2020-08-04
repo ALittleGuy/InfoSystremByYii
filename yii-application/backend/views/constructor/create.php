@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $agreement common\models\AgreementModel */
 
 $this->title = '导入新机构';
-$this->params['breadcrumbs'][] = ['label' => 'Constructors', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '机构管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="constructor-create">

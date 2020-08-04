@@ -19,7 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
 
     <?php $userStatus = \common\models\UserStatus::find()->all();
     $statusMap = \yii\helpers\ArrayHelper::map($userStatus, 'id', 'description');

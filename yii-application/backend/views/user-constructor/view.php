@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\UserConstructor */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'User Constructors', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '机构跟进管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

@@ -26,7 +26,7 @@ use Yii;
  * @property StudentConstructorInterview[] $studentConstructorInterviews
  * @property StudentParent[] $studentParents
  */
-class student extends \yii\db\ActiveRecord
+class Student extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

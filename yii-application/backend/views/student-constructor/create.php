@@ -4,9 +4,9 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StudentConstructor */
-
-$this->title = 'Create Student Constructor';
-$this->params['breadcrumbs'][] = ['label' => 'Student Constructors', 'url' => ['index']];
+/* @var $agreement common\models\AgreementModel */
+$this->title = '添加兼职项';
+$this->params['breadcrumbs'][] = ['label' => '兼职管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-constructor-create">
@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'agreement' => $agreement
     ]) ?>
 
 </div>

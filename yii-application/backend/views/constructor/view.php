@@ -10,7 +10,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Constructor */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Constructors', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '机构管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

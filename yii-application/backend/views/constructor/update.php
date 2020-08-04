@@ -8,9 +8,9 @@ use yii\helpers\Html;
 /* @var $agreement common\models\AgreementModel*/
 
 $this->title = '更新机构: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Constructors', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '机构管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = '机构信息更新';
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="constructor-update">
 

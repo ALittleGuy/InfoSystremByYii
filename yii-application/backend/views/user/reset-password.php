@@ -6,9 +6,9 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = '重置密码: ' . $user->username;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '用户管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $user->username, 'url' => ['view', 'id' => $user->id]];
-$this->params['breadcrumbs'][] = ['label' => 'Update' , 'url' => ['update' , 'id' => $user->id]];
+$this->params['breadcrumbs'][] = ['label' => '用户更新' , 'url' => ['update' , 'id' => $user->id]];
 $this->params['breadcrumbs'][] = '重置密码';
 
 ;

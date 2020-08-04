@@ -5,6 +5,7 @@ namespace common\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\StudentConstructor;
+use function GuzzleHttp\Psr7\str;
 
 /**
  * StudentConstructorSearch represents the model behind the search form of `common\models\StudentConstructor`.
@@ -23,10 +24,10 @@ class StudentConstructorSearch extends StudentConstructor
     public function rules()
     {
         return [
-            [['id', 'join_date', 'end_date', 'constructor_id',  'status_id'], 'integer'],
+            [['id' , 'constructor_id',  'status_id'], 'integer'],
             [['salary'], 'number'],
             [['student_id'] , 'string' , 'max' => 11],
-            [['profile', 'agreement' , 'constructor' , 'student'], 'safe'],
+            [['profile', 'agreement' , 'constructor' , 'student' , 'join_date' , 'end_date'], 'safe'],
         ];
     }
 
@@ -64,11 +65,11 @@ class StudentConstructorSearch extends StudentConstructor
             return $dataProvider;
         }
 
+
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'join_date' => $this->join_date,
-            'end_date' => $this->end_date,
             'salary' => $this->salary,
             'student_constructor.status_id' => $this->status_id,
         ]);
@@ -82,6 +83,11 @@ class StudentConstructorSearch extends StudentConstructor
         $query->andFilterWhere(['like' , 'student.name' , $this->student]);
         $query->andFilterWhere(['like' , 'constructor.name' , $this->constructor]);
 
+        $join_date = strtotime($this->join_date);
+        $end_date = strtotime($this->end_date);
+
+        $query->andFilterCompare('student_constructor.join_date' , '>'.$join_date);
+        $query->andFilterCompare('student_constructor.end_date' , '<'.$end_date );
         return $dataProvider;
     }
 }
