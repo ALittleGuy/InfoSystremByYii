@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'student_id',
             'name',
             'mobile',
             'email:email',
@@ -37,9 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'college',
             //'address',
             //'age',
-            //'status_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

@@ -114,7 +114,9 @@ class StudentConstructorController extends Controller
         $agreement = new AgreementModel();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->join_date = strtotime($model->join_date);
-            $model->end_date = strtotime($model->end_date);
+            if($model->end_date!=null) {
+                $model->end_date = strtotime($model->end_date);
+            }
             $agreement->agreementFile = UploadedFile::getInstance($agreement , 'agreementFile');
             if($agreement->agreementFile!=null){
                 $model->agreement = $model->student_id.'_'.$model->constructor_id.'.'.$agreement->agreementFile->extension;

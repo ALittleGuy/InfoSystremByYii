@@ -29,7 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'description:ntext',
-            'join_date',
+            [
+                'attribute' => 'join_date',
+                'format' => ['date' , 'php:Y-m-d']
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -41,6 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
             'qq_url:url',
+            ['attribute'=>'status_id',
+                'value'=>'handle-stauts.description',
+                'filter'=>\common\models\HandleStatus::find()
+                    ->select(['description','id'])
+                    ->orderBy('id')
+                    ->indexBy('id')
+                    ->column(),
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'student ',
-                'value' => $model->student->name
+                'value' => $model->student->name.'('.$model->student_id.')'
             ],
             'salary',
             'profile:ntext',
@@ -74,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],
+            'profile'
         ],
     ]) ?>
 

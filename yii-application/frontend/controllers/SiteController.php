@@ -1,10 +1,17 @@
 <?php
+
 namespace frontend\controllers;
 
+use common\models\Constructor;
+use common\models\SignupForm;
+use common\models\UserConstructor;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
+use yii\db\QueryBuilder;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -12,7 +19,6 @@ use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
 /**
@@ -28,7 +34,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'try'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -36,7 +42,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'try'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -89,11 +95,11 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
             $model->password = '';
-
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -216,8 +222,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {
@@ -256,5 +262,16 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionTry()
+    {
+        $query = new Query();
+        $constructor_id = $query->select('id')->from('user_constructor')->where(['user_id' => Yii::$app->user->getId()])->column();
+
+        $var = [1,2,3];
+
+        $dataprovder = Constructor::find()->where(['in', 'id', $constructor_id])->all();
+
     }
 }

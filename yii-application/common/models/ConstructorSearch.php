@@ -2,9 +2,10 @@
 
 namespace common\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Constructor;
+use yii\db\Query;
 
 /**
  * ConstructorSearch represents the model behind the search form of `common\models\Constructor`.
@@ -42,21 +43,31 @@ class ConstructorSearch extends Constructor
     public function search($params)
     {
         $query = Constructor::find();
-
         // add conditions that should always apply here
+        return $this->getDataProvider($query , $params);
+    }
 
+    public function myConstructorSearch($params){
+
+        $constructor_id = UserConstructor::getConstructorIdByUserId(Yii::$app->user->getId());
+        $query = Constructor::find()->where(['in', 'id', $constructor_id]);
+        return $this->getDataProvider($query , $params);
+
+    }
+
+    protected function getDataProvider($query , $params){
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 15,
+            ],
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -77,4 +88,5 @@ class ConstructorSearch extends Constructor
 
         return $dataProvider;
     }
+
 }

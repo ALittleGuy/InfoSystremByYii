@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -27,11 +28,11 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'max_salary')->textInput() ?>
 
-            <?= Html::img('uploads/agreement/constructor'.$model->agreement, ['alt' => '协议书']) ?>
+            <?= Html::img('uploads/agreement/constructor/'.$model->agreement, ['alt' => '协议书' , 'width' => '200' , 'height' => '100']) ?>
 
             <?= $form->field($agreement, 'agreementFile')->fileInput() ?>
 
-            <?= Html::img('uploads/licence/'.$model->license, ['alt' => '营业执照']) ?>
+            <?= Html::img('uploads/licence/'.$model->license, ['alt' => '营业执照','width' => '200' , 'height' => '100']) ?>
 
 
             <?= $form->field($licence, 'licenceFile')->fileInput() ?>
@@ -40,7 +41,9 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'join_date')->textInput() ?>
+            <?= $form->field($model, 'join_date')->widget(DatePicker::className()
+                ,  ['options' => ['class' => 'from-control' ],
+                    'dateFormat' => 'yyyy-MM-dd'])  ?>
 
             <?php $constructorStatus = \common\models\ConstructorStatus::find()->all();
             $statusMap = \yii\helpers\ArrayHelper::map($constructorStatus, 'id', 'description');

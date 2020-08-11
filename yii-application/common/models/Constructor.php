@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\Query;
 use yii\web\UploadedFile;
 /**
  * This is the model class for table "constructor".
@@ -61,11 +62,12 @@ class Constructor extends \yii\db\ActiveRecord
         return [
             [['name', 'principal_name', 'mobile', 'address', 'min_salary', 'max_salary', 'credit_code'], 'required'],
             [['min_salary', 'max_salary'], 'number'],
-            [['join_date', 'status_id'], 'integer'],
+            [[ 'status_id'], 'integer'],
             [['name', 'principal_name', 'credit_code' , 'agreement','license'], 'string', 'max' => 128],
             [['mobile'], 'string', 'max' => 11],
             [['address', 'profile'], 'string', 'max' => 256],
             [['phone'], 'string', 'max' => 13],
+            [['join_date'] , 'safe']
         ];
     }
 
@@ -119,7 +121,7 @@ class Constructor extends \yii\db\ActiveRecord
 
     public function isLicenceExist()
     {
-        $filepath = 'uploads/licence/' . $this->license;
+        $filepath = Yii::getAlias('@uploads').'/licence/' . $this->license;
         if (file_exists($filepath)) {
             return true;
         } else {
@@ -129,7 +131,7 @@ class Constructor extends \yii\db\ActiveRecord
 
     public function isAgreementExist()
     {
-        $filepath = 'uploads/agreement/constructor/' . $this->agreement;
+        $filepath = Yii::getAlias('@uploads').'/agreement/constructor/' . $this->agreement;
         if (file_exists($filepath)) {
             return true;
         } else {
@@ -146,4 +148,9 @@ class Constructor extends \yii\db\ActiveRecord
 //            return false;
 //        }
 //    }
+
+    public static function getConstructors($userId){
+        $constructor_id = UserConstructor::getConstructorIdByUserId(Yii::$app->user->getId());
+        return Constructor::find()->where(['in', 'id', $constructor_id])->all();
+    }
 }

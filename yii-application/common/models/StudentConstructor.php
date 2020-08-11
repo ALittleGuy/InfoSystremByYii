@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "student_constructor".
@@ -61,6 +62,7 @@ class StudentConstructor extends \yii\db\ActiveRecord
             [['constructor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Constructor::className(), 'targetAttribute' => ['constructor_id' => 'id']],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => Student::className(), 'targetAttribute' => ['student_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => WorkStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['end_date']  , 'safe']
         ];
     }
 
@@ -98,11 +100,18 @@ class StudentConstructor extends \yii\db\ActiveRecord
 
     public function isAgreementExist()
     {
-        $filepath = 'uploads/agreement/student/' . $this->agreement;
+        $filepath = Yii::getAlias('@uploads').'/agreement/student/' . $this->agreement;
         if (file_exists($filepath)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static function getStudentIdByConstructorId($constructor_id){
+        $query = new Query();
+        $myStudentConstructors = $query->select('student_id')->from('student_constructor')
+            ->where(['in', 'constructor_id', $constructor_id])->column();
+        return $myStudentConstructors;
     }
 }

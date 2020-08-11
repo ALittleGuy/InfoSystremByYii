@@ -26,6 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <?php $handleStatus = \common\models\HandleStatus::find()->all();
+    $statusMap = \yii\helpers\ArrayHelper::map($handleStatus, 'id', 'description');
+    ?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -40,6 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             ['attribute' => 'end_date',
                 'format' => ['date', 'php:Y-m-d H:i:s'],
+            ],
+            [
+                'label' => '状态',
+                'value' => $statusMap[$model->status_id]
             ],
             'qq_url:url',
         ],

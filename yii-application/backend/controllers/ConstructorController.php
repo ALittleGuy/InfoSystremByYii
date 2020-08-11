@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\AgreementModel;
 use common\models\LicenceModel;
+use common\models\UserConstructor;
 use frontend\assets\AppAsset;
 use PharIo\Manifest\ApplicationName;
 use PharIo\Manifest\License;
@@ -33,7 +34,7 @@ class ConstructorController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'update', 'delete', 'view', 'create', 'licence' ,'agreement'],
+                        'actions' => ['index', 'update', 'delete', 'view', 'create', 'licence' ,'agreement' ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -105,6 +106,7 @@ class ConstructorController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->join_date = strtotime($model->join_date);
             $licence->licenceFile = UploadedFile::getInstance($licence, 'licenceFile');
             $agreement->agreementFile = UploadedFile::getInstance($agreement, 'agreementFile');
             if ($agreement->agreementFile != null) {
@@ -142,6 +144,7 @@ class ConstructorController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->join_date = strtotime($model->join_date);
             $agreement->agreementFile = UploadedFile::getInstance($agreement, 'agreementFile');
             $licence->licenceFile = UploadedFile::getInstance($licence, 'licenceFile');
             if ($agreement->agreementFile != null) {
@@ -195,5 +198,7 @@ class ConstructorController extends Controller
             Yii::$app->response->sendFile($filePath);
         }
     }
+
+
 
 }

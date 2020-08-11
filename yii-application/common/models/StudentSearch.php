@@ -2,9 +2,10 @@
 
 namespace common\models;
 
+use common\models\Student;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Student;
+use yii\db\Query;
 
 /**
  * StudentSearch represents the model behind the search form of `common\models\Student`.
@@ -17,8 +18,8 @@ class StudentSearch extends Student
     public function rules()
     {
         return [
-            [['age','status_id' ], 'integer'],
-            [['id', 'name', 'mobile', 'email', 'resume', 'sex', 'major', 'college', 'address' , 'profile'], 'safe'],
+            [['age', 'status_id'], 'integer'],
+            [['id', 'name', 'mobile', 'email', 'resume', 'sex', 'major', 'college', 'address', 'profile'], 'safe'],
         ];
     }
 
@@ -42,8 +43,19 @@ class StudentSearch extends Student
     {
         $query = Student::find();
 
-        // add conditions that should always apply here
+        return $this->getSearch($params, $query);
+    }
 
+    public function myStudentSearch($params)
+    {
+        $constructor_id = UserConstructor::getConstructorIdByUserId(\Yii::$app->user->getId());
+        $myStudentConstructors = StudentConstructor::getStudentIdByConstructorId($constructor_id);
+        $myStudents = Student::find()->where(['in', 'id', $myStudentConstructors]);
+        return $this->getSearch($params, $myStudents);
+    }
+
+    protected function getSearch($params, $query)
+    {
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -71,8 +83,9 @@ class StudentSearch extends Student
             ->andFilterWhere(['like', 'major', $this->major])
             ->andFilterWhere(['like', 'college', $this->college])
             ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like' , 'profile' , $this->profile]);
+            ->andFilterWhere(['like', 'profile', $this->profile]);
 
         return $dataProvider;
+
     }
 }

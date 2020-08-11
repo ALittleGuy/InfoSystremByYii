@@ -49,7 +49,7 @@ class Publicfile extends \yii\db\ActiveRecord
     }
 
     public function isPublicFileExist(){
-        $filePath = 'uploads/public/'.$this->name;
+        $filePath =Yii::getAlias('@uploads') .'/public/'.$this->name;
         if(file_exists($filePath)){
             return true;
         }else{

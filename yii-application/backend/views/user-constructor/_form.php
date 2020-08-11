@@ -42,6 +42,12 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'qq_url')->textInput(['maxlength' => true]) ?>
 
+            <?php $handleStatus = \common\models\HandleStatus::find()->all();
+            $statusMap = \yii\helpers\ArrayHelper::map($handleStatus, 'id', 'description');
+            ?>
+
+            <?= $form->field($model, 'status_id')->dropDownList($statusMap, ['prompt' => '请选择状态']) ?>
+
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
             </div>

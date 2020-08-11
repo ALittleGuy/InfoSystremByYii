@@ -5,6 +5,8 @@ namespace common\models;
 use phpDocumentor\Reflection\Types\String_;
 use phpDocumentor\Reflection\Types\This;
 use Yii;
+use yii\db\Query;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "student".
@@ -48,6 +50,7 @@ class Student extends \yii\db\ActiveRecord
             [['name', 'email', 'resume', 'major', 'college', 'address'], 'string', 'max' => 128],
             [['profile'] , 'string'],
             [['sex'], 'string', 'max' => 2],
+            [['id'], 'unique' , 'message' => '对应的学生已经被录入']
         ];
     }
 
@@ -105,5 +108,17 @@ class Student extends \yii\db\ActiveRecord
     public function getStudentstatus()
     {
         return $this->hasOne(StudentStatus::className()  , ['id' => 'status_id']);
+    }
+
+    public static  function getStudent($userId){
+        $query = new Query();
+        $constructor_id = $query->select('id')->from('user_constructor')
+            ->where(['user_id' => $userId])->column();
+        $myStudentConstructors = $query->select('student_id')->from('student_constructor')
+            ->where(['in' , 'constructor_id',$constructor_id])->column();
+        $myStudents = Student::find()->where(['in' , 'id' , $myStudentConstructors])->all();
+
+        return $myStudents;
+
     }
 }

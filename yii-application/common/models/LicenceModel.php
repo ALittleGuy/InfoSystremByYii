@@ -20,7 +20,7 @@ class LicenceModel extends Model
 
     public function upload($fileName){
         if ($this->validate()) {
-            $this->licenceFile->saveAs('uploads/licence/' . $fileName );
+            $this->licenceFile->saveAs(\Yii::getAlias('@uploads').'/licence/' . $fileName );
             return true;
         } else {
             return false;

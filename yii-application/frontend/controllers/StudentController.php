@@ -5,9 +5,10 @@ namespace frontend\controllers;
 
 
 use common\models\ConstructorSearch;
+use common\models\Student;
 use common\models\StudentSearch;
 use Yii;
-use yii\base\Controller;
+use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
@@ -20,7 +21,7 @@ class StudentController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index' , 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,5 +52,21 @@ class StudentController extends Controller
         $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index' , ['searchModel' => $searchModel , 'dataProvider' => $dataProvider]);
+    }
+
+    /**
+     * Creates a new Student model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Student();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect('index');
+        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 }

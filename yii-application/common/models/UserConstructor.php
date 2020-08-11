@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use MongoDB\Driver\Query;
 use Yii;
 
 /**
@@ -14,7 +15,9 @@ use Yii;
  * @property string $qq_url
  * @property int $end_date
  * @property Constructor $constructor
+ * @property int status_id
  * @property User $user
+ *
  */
 class UserConstructor extends \yii\db\ActiveRecord
 {
@@ -45,7 +48,7 @@ class UserConstructor extends \yii\db\ActiveRecord
     {
         return [
             [['constructor_id', 'user_id',  'qq_url'], 'required'],
-            [['constructor_id', 'user_id', 'join_date' , 'end_date'], 'integer'],
+            [['constructor_id', 'user_id', 'join_date' , 'end_date' , 'status_id'], 'integer'],
             [['qq_url'], 'string', 'max' => 128],
             [['constructor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Constructor::className(), 'targetAttribute' => ['constructor_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -88,4 +91,16 @@ class UserConstructor extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function getHandleStauts(){
+        return $this->hasOne(HandleStatus::className() , ['id' => 'user_constructor.status_id']);
+    }
+
+    public static function getConstructorIdByUserId($userId){
+        $query = new \yii\db\Query();
+        $constructor_id = $query->select('constructor_id')->from('user_constructor')
+            ->where(['user_id' => $userId])->column();
+        return $constructor_id;
+    }
+
 }

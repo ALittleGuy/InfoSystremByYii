@@ -20,7 +20,7 @@ class AgreementModel extends Model
 
     public function upload($fileName , $identity){
         if ($this->validate()) {
-            $this->agreementFile->saveAs('uploads/agreement/'.$identity.'/' . $fileName );
+            $this->agreementFile->saveAs(\Yii::getAlias('@uploads').'/agreement/'.$identity.'/' . $fileName );
             return true;
         } else {
             return false;

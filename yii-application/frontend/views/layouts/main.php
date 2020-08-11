@@ -36,20 +36,19 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => '首页', 'url' => ['/site/index']],
 
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => '机构', 'url' => ['/constructor/index']];
         $menuItems[] = ['label' => '学生', 'url' => ['/student/index']];
+        $menuItems[] = ['label' => '公告文件' , 'url' => ['/publicfile/index']];
         $menuItems[] = ['label' => '我的', 'options'=>['class'=>'ycn-banner'], 'items'=>[
-            ['label' => '<i class="fa fa-wikipedia-w top-tag"></i> 对接机构', 'url' => ['topic/wiki'],'encode' => false],
-            ['label' => '<i class="fa fa-question-circle top-tag"></i> 对接学生', 'url' => ['topic/question'],'encode' => false],
+            ['label' => '<i class="fa fa-wikipedia-w top-tag"></i> 对接机构', 'url' => ['my-constructor/index'],'encode' => false],
+            ['label' => '<i class="fa fa-question-circle top-tag"></i> 对接兼职', 'url' => ['my-student-constructor/index'],'encode' => false],
+            ['label' => '<i class="fa fa-question-circle top-tag"></i>  对接学生 ', 'url' => ['my-student/index'],'encode' => false],
             ['label' => '<i class="fa fa-book top-tag"></i> 个人信息', 'url' => ['profile/personalinfo'],'encode' => false],]];
 
         $menuItems[] = '<li>'

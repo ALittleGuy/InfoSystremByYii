@@ -14,10 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('导入新机构', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -31,18 +27,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'principal_name',
             'mobile',
             'address',
-            //'min_salary',
-            //'max_salary',
-            //'license',
-            //'credit_code',
-            //'phone',
+            'min_salary',
+            'max_salary',
+//            'license',
+            'credit_code',
+//            'phone',
             //'join_date',
-            //'status_id',
+            ['attribute' => 'status_id',
+                'value' => 'constructorstatus.description',
+                'filter' => \common\models\ConstructorStatus::find()
+                    ->select(['description', 'id'])
+                    ->orderBy('id')
+                    ->indexBy('id')
+                    ->column(),
+            ],
             //'profile',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'check',
+                'format' => 'raw',
+                'value' => function($model){
+                    return Html::a('check' , ['view' , 'id' => $model->id] ,['class' => 'btn btn-success']);
+                }
+            ],
+
+
         ],
     ]); ?>
-
 
 </div>

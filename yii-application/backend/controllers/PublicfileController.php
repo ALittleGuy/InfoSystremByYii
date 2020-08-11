@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\PublicFileModel;
+use phpDocumentor\Reflection\Element;
 use Yii;
 use common\models\Publicfile;
 use common\models\PublicfileSearch;
@@ -88,10 +89,13 @@ class PublicfileController extends Controller
                 $model->name = $model->name.'.'.$publicfile->publicfile->extension;
                 $publicfile->upload($model->name);
                 $model->save();
+            }else{
+                return $this->refresh();
+
             }
 
-
             return $this->redirect(['view', 'id' => $model->id]);
+
         }
 
         return $this->render('create', [

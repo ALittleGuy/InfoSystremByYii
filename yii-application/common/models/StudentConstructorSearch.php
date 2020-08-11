@@ -2,10 +2,10 @@
 
 namespace common\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\StudentConstructor;
-use function GuzzleHttp\Psr7\str;
+use yii\db\Query;
 
 /**
  * StudentConstructorSearch represents the model behind the search form of `common\models\StudentConstructor`.
@@ -50,23 +50,28 @@ class StudentConstructorSearch extends StudentConstructor
     public function search($params)
     {
         $query = StudentConstructor::find();
+        return $this->getSearch($params , $query);
 
+    }
+
+    public function myStudentConstructorSearch($params){
+        $constructor_id =UserConstructor::getConstructorIdByUserId(Yii::$app->user->getId());
+        $student_constructor = StudentConstructor::find()->where(['in' , 'constructor_id' , $constructor_id]);
+        return $this->getSearch($params , $student_constructor);
+
+    }
+
+    protected function getSearch($params  , $query){
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
-
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

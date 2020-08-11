@@ -37,10 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ->column(),
             ],
             ['attribute' => 'join_date',
-                'format' => ['date', 'php:Y-m-d H:i:s'],
+                'format' => ['date', 'php:Y-m-d '],
             ],
             ['attribute' => 'end_date',
-                'format' => ['date', 'php:Y-m-d H:i:s'],
+                'format' => ['date', 'php:Y-m-d '],
             ],
             [
                 'attribute' => 'constructor',

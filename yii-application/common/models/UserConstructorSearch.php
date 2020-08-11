@@ -23,7 +23,7 @@ class UserConstructorSearch extends UserConstructor
     public function rules()
     {
         return [
-            [['id', 'constructor_id', 'user_id'], 'integer'],
+            [['id', 'constructor_id', 'user_id' , 'status_id'], 'integer'],
             [['qq_url' , 'name' , 'username'], 'safe'],
         ];
     }
@@ -69,6 +69,7 @@ class UserConstructorSearch extends UserConstructor
             'user_id' => $this->user_id,
             'join_date' => $this->join_date,
             'end_date' => $this->end_date,
+            'user_constructor.status_id' => $this->status_id,
         ]);
 
         $query->join('INNER JOIN' , 'user' , 'user.id = user_constructor.user_id');
